@@ -1,0 +1,24 @@
+import numpy as np
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+
+X = np.array([[1,2],[1.5,1.8],[5,8],[8,8],[1,0.6],[9,11],[8,2],[10,2],[9,3]])
+
+kmeans = KMeans(n_clusters=3, random_state=42)
+kmeans.fit(X)
+
+labels = kmeans.labels_
+centroids = kmeans.cluster_centers_
+
+colors = ['red', 'green', 'blue']
+
+for i in range(3):
+    plt.scatter(X[labels == i, 0], X[labels == i, 1], c=colors[i])
+    plt.gca().add_patch(
+        plt.Circle(centroids[i], 2.5, color=colors[i], fill=False, linestyle='--')
+    )
+
+plt.scatter(centroids[:,0], centroids[:,1], c='black', marker='x', s=100)
+plt.title("K-Means Clustering with Circles")
+plt.grid(True)
+plt.show()
